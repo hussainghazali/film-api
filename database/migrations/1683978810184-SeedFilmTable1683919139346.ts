@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner, getRepository } from 'typeorm';
-import { Film } from '../../src/films/entities/film.entity';
+import { Film } from '../../src/films/films.entity';
 import * as Chance from 'chance';
 import dataSource from 'database/data-source';
 

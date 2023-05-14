@@ -5,6 +5,11 @@ import { dataSourceOptions } from 'database/data-source';
 import { FilmsModule } from './films/films.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthController } from './auth/auth.controller';
+import { AuthService } from './auth/auth.service';
+import { AuthModule } from './auth/auth.module';
+import { UsersService } from './user/user.service';
+import { UsersModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -13,8 +18,10 @@ import { AppService } from './app.service';
     }),
     TypeOrmModule.forRoot(dataSourceOptions),
     FilmsModule,
+    AuthModule,
+    UsersModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, AuthController],
+  providers: [AppService, AuthService, UsersService],
 })
 export class AppModule {}

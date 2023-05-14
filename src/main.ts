@@ -10,6 +10,7 @@ async function bootstrap() {
     .setTitle('Avrioc Coding Assignment')
     .setDescription('API Documentation')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);

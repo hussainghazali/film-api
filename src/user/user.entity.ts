@@ -12,7 +12,7 @@ import * as bcrypt from 'bcrypt';
 
 @Entity('users')
 export class UserEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   @ApiProperty({ description: 'The ID of the user.', example: '1' })
   id: string;
 

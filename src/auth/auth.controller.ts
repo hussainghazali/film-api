@@ -8,7 +8,13 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBody, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiBody,
+  ApiResponse,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { CreateUserDto } from '../user/user.create.dto';
 import { RegistrationStatus } from './regisration-status.dto';
 import { AuthService } from './auth.service';
@@ -52,8 +58,12 @@ export class AuthController {
     description: 'Returns the current authenticated user',
     type: JwtPayload,
   })
+
   @UseGuards(AuthGuard())
-  @Get('whoami')
+  @Get('me')
+  @ApiBearerAuth() 
+  @ApiOperation({ summary: 'Get authenticated user' })
+  @ApiResponse({ status: 200, description: 'Returns the authenticated user' })
   public async testAuth(@Req() req: any): Promise<JwtPayload> {
     return req.user;
   }

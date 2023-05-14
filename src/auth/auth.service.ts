@@ -7,6 +7,7 @@ import { LoginUserDto } from '../user/user-login.dto';
 import { UserDto } from '../user/user.dto';
 import { JwtPayload } from './payload.dto';
 import { JwtService } from '@nestjs/jwt';
+import { UserEntity } from 'src/user/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -15,12 +16,15 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async register(userDto: CreateUserDto): Promise<RegistrationStatus> {
+  async register(
+    userDto: CreateUserDto,
+  ): Promise<RegistrationStatus & { user: UserEntity }> {
     try {
-      await this.usersService.create(userDto);
+      const user = await this.usersService.create(userDto);
       return {
         success: true,
         message: 'User registered',
+        user,
       };
     } catch (err) {
       throw new HttpException(err, HttpStatus.BAD_REQUEST);
@@ -31,6 +35,7 @@ export class AuthService {
     const user = await this.usersService.findByLogin(loginUserDto);
     const token = this.createToken(user);
     return {
+      id: user.id,
       username: user.username,
       ...token,
     };

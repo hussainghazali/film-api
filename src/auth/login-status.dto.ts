@@ -1,6 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class LoginStatus {
+  @ApiProperty({ description: 'The ID of the logged-in user.' })
+  id: string;
+
   @ApiProperty({ description: 'The username of the logged-in user.' })
   username: string;
 

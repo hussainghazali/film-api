@@ -52,7 +52,7 @@ export class UsersService {
     return this.toUserDto(user);
   }
 
-  async create(userDto: CreateUserDto): Promise<UserDto> {
+  async create(userDto: CreateUserDto): Promise<UserEntity> {
     const { username, password, email } = userDto;
 
     // check if the user exists in the db
@@ -69,7 +69,7 @@ export class UsersService {
 
     await this.userRepo.save(user);
 
-    return this.toUserDto(user);
+    return user;
   }
 
   private sanitizeUser(user: UserEntity): UserEntity {

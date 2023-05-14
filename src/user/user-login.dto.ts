@@ -7,6 +7,13 @@ export class LoginUserDto {
     description: 'The username of the user.',
     example: 'john_doe',
   })
+  readonly id: string;
+
+  @IsNotEmpty()
+  @ApiProperty({
+    description: 'The username of the user.',
+    example: 'john_doe',
+  })
   readonly username: string;
 
   @IsNotEmpty()

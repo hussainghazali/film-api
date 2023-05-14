@@ -42,4 +42,13 @@ export class FilmService {
     }
     await this.filmRepository.remove(film);
   }
+
+  async getFilmRatings(filmId: number) {
+    const film = await this.filmRepository.find({
+      where: { id: filmId },
+      relations: ['ratings'],
+    });
+    return film[0]?.ratings || [];
+  }
+  
 }

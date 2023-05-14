@@ -71,4 +71,14 @@ export class FilmController {
   deleteFilm(@Param('id') id: string) {
     return this.filmService.deleteFilm(id);
   }
+
+  @Get(':id/ratings')
+  @ApiParam({ name: 'id', description: 'The ID of the film' })
+  @ApiResponse({
+    status: 200,
+    description: 'Retrieved film by ID successfully.',
+  })
+  async getFilmRatings(@Param('id') id: number) {
+    return this.filmService.getFilmRatings(id);
+  }
 }

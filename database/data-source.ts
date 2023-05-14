@@ -4,6 +4,8 @@ import { SeedFilmTable1683919139346 } from './migrations/1683978810184-SeedFilmT
 import { Film } from 'src/films/films.entity';
 import { UserEntity } from 'src/user/user.entity';
 import { CreateUserTable1684027311883 } from './migrations/1684027311883-CreateUsersTable';
+import { CreateRatingTable1684030454346 } from './migrations/1684030454346-CreateRatingTable';
+import { RatingEntity } from 'src/rating/rating.entity';
 
 export const dataSourceOptions: DataSourceOptions = {
   type: 'mysql',
@@ -12,11 +14,12 @@ export const dataSourceOptions: DataSourceOptions = {
   username: 'root',
   password: '0513',
   database: 'dream_drivers',
-  entities: [Film, UserEntity],
+  entities: [Film, UserEntity, RatingEntity],
   migrations: [
     CreateFilmTable1683919139346,
     SeedFilmTable1683919139346,
     CreateUserTable1684027311883,
+    CreateRatingTable1684030454346,
   ],
   synchronize: true,
   logging: true,

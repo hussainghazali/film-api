@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import {
   IsNotEmpty,
   IsString,
@@ -7,6 +7,7 @@ import {
   IsUrl,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { RatingEntity } from 'src/rating/rating.entity';
 
 @Entity()
 export class Film {
@@ -56,5 +57,6 @@ export class Film {
   @ApiProperty({ description: 'The URL of the film photo.' })
   photo: string;
 
-  // Other fields, constructors, and methods can be added here
+  @OneToMany(() => RatingEntity, (rating) => rating.film)
+  ratings: RatingEntity[];
 }

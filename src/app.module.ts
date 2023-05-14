@@ -7,6 +7,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './user/user.module';
+import { RatingModule } from './rating/rating.module';
 
 @Module({
   imports: [
@@ -14,9 +15,10 @@ import { UsersModule } from './user/user.module';
       isGlobal: true,
     }),
     TypeOrmModule.forRoot(dataSourceOptions),
-    FilmsModule,
     AuthModule,
+    FilmsModule,
     UsersModule,
+    RatingModule,
   ],
   controllers: [AppController],
   providers: [AppService],

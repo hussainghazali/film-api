@@ -4,11 +4,11 @@ import { FilmController } from './films.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Film } from './films.entity';
 import { RatingModule } from 'src/rating/rating.module';
-import { ElasticsearchService } from './elasticsearch.service';
+import { SearchModule } from 'src/search/search.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Film]), RatingModule],
+  imports: [TypeOrmModule.forFeature([Film]), RatingModule, SearchModule],
   controllers: [FilmController],
-  providers: [FilmService, ElasticsearchService],
+  providers: [FilmService],
 })
 export class FilmsModule {}

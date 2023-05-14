@@ -1,45 +1,41 @@
 import { Injectable } from '@nestjs/common';
-import { Client } from '@elastic/elasticsearch';
-import { Film } from './films.entity';
+import { ElasticsearchService } from '@nestjs/elasticsearch';
+import { Film } from '../films/films.entity';
 import { SearchResponse } from '@elastic/elasticsearch/lib/api/types';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
-export class ElasticsearchService {
-  private readonly client: Client;
-
-  constructor() {
-    this.client = new Client({ node: 'http://localhost:9200' });
-  }
-
-  getClient(): Client {
-    return this.client;
-  }
+export class SearchService {
+  constructor(
+    private readonly esService: ElasticsearchService,
+    private readonly configService: ConfigService,
+  ) {}
 
   async indexFilm(film: Film) {
-    await this.client.index({
-      index: 'film',
+    await this.esService.index({
+      index: this.configService.get('ELASTICSEARCH_INDEX'),
       body: film,
     });
   }
 
   async updateFilm(film: Film) {
-    await this.client.update({
-      index: 'film',
+    await this.esService.update({
+      index: this.configService.get('ELASTICSEARCH_INDEX'),
       id: film.id.toString(),
       body: { doc: film },
     });
   }
 
   async deleteFilm(filmId: number) {
-    await this.client.delete({
-      index: 'film',
+    await this.esService.delete({
+      index: this.configService.get('ELASTICSEARCH_INDEX'),
       id: filmId.toString(),
     });
   }
 
   async searchFilms(query: string): Promise<SearchResponse<Film>> {
-    return this.client.search({
-      index: 'film',
+    return this.esService.search({
+      index: this.configService.get('ELASTICSEARCH_INDEX'),
       body: {
         query: {
           multi_match: {

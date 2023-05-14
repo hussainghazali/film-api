@@ -3,22 +3,22 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Film } from './films.entity';
 import { CreateFilmDto, UpdateFilmDto } from './films.dto';
-import { ElasticsearchService } from './elasticsearch.service';
+import { SearchService } from '../search/search.service';
 
 @Injectable()
 export class FilmService {
   constructor(
     @InjectRepository(Film)
     private readonly filmRepository: Repository<Film>,
-    private readonly elasticsearchService: ElasticsearchService,
+    private readonly elasticsearchService: SearchService,
   ) {}
 
   async getAllFilms() {
     return this.filmRepository.find();
   }
 
-  async getFilmById(id: string) {
-    return this.filmRepository.findOneById(id);
+  async getFilmById(id: number) {
+    return this.filmRepository.findOne({ where: { id } });
   }
 
   async createFilm(createFilmDto: CreateFilmDto) {
@@ -28,8 +28,8 @@ export class FilmService {
     return savedFilm;
   }
 
-  async updateFilm(id: string, updateFilmDto: UpdateFilmDto) {
-    const film = await this.filmRepository.findOneById(id);
+  async updateFilm(id: number, updateFilmDto: UpdateFilmDto) {
+    const film = await this.filmRepository.findOne({ where: { id } });
     if (!film) {
       throw new NotFoundException('Film not found');
     }
@@ -38,9 +38,10 @@ export class FilmService {
     await this.elasticsearchService.updateFilm(savedFilm);
     return savedFilm;
   }
+  
 
-  async deleteFilm(id: string) {
-    const film = await this.filmRepository.findOneById(id);
+  async deleteFilm(id: number) {
+    const film = await this.filmRepository.findOne({ where: { id } });
     if (!film) {
       throw new NotFoundException('Film not found');
     }

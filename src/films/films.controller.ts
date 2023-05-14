@@ -35,7 +35,7 @@ export class FilmController {
     description: 'Retrieved film by ID successfully.',
     type: Film,
   })
-  getFilmById(@Param('id') id: string) {
+  getFilmById(@Param('id') id: number) {
     return this.filmService.getFilmById(id);
   }
 
@@ -58,7 +58,7 @@ export class FilmController {
     description: 'Film updated successfully.',
     type: Film,
   })
-  updateFilm(@Param('id') id: string, @Body() updateFilmDto: UpdateFilmDto) {
+  updateFilm(@Param('id') id: number, @Body() updateFilmDto: UpdateFilmDto) {
     return this.filmService.updateFilm(id, updateFilmDto);
   }
 
@@ -68,7 +68,7 @@ export class FilmController {
     status: 200,
     description: 'Film deleted successfully.',
   })
-  deleteFilm(@Param('id') id: string) {
+  deleteFilm(@Param('id') id: number) {
     return this.filmService.deleteFilm(id);
   }
 

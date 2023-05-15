@@ -43,13 +43,6 @@ $ npm run start:dev
 
 # production mode
 $ npm run start:prod
-
-# After successfull execution
-<img src="https://github.com/hussainghazali/film-api/blob/master/images/Project%20Running%20Successfully.png" alt="Example Image">
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="[https://nestjs.com/img/logo-small.svg](https://github.com/hussainghazali/film-api/blob/master/images/Project%20Running%20Successfully.png)"/></a>
-</p>
-![Project Running Successfully](https://github.com/hussainghazali/film-api/blob/master/images/Project%20Running%20Successfully.png)
 ```
 
 ## Migration
@@ -66,9 +59,6 @@ $  typeorm -d dist/database/data-source.js migration:run
 
 # revert migration
 $  typeorm -d dist/database/data-source.js migration:revert
-
-# After successfull execution
-<img src="https://github.com/hussainghazali/film-api/assets/50146615/3b323013-3974-4703-9bb9-da2e75f5ec63" width="100" height="100"/>
 ```
 
 ## Swagger API Reference
@@ -76,20 +66,11 @@ $  typeorm -d dist/database/data-source.js migration:revert
 ```bash
 # Build the migration
 $ http://localhost:3000/api#/
-
-# After successfull execution
-[![Swagger-API-Documentation.png](https://i.postimg.cc/KjLM0MKR/Swagger-API-Documentation.png)](https://postimg.cc/WqNz3twv)
-
-# After successfull execution
-[![Swagger-Schema-and-DTO-Documentation.png](https://i.postimg.cc/PxvpqwQ2/Swagger-Schema-and-DTO-Documentation.png)](https://postimg.cc/Vr1LG5TC)
 ```
 
 ## Docker - Elasticsearch and Kibana
 
 ```bash
-# Docker Running After successfull execution
-[![Docker-Instance-Elastic-Search-and-Kibana.png](https://i.postimg.cc/G3DSsgMx/Docker-Instance-Elastic-Search-and-Kibana.png)](https://postimg.cc/LhHVcDFJ)
-
 # Pull Elasticsearch
 $  docker pull docker.elastic.co/elasticsearch/elasticsearch:7.8.1 
 
@@ -99,14 +80,8 @@ $  docker pull docker.elastic.co/kibana/kibana:7.8.1
 # run docker Elasticsearch
 $  docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.8.1
 
-# After successfull execution
-[![Elastic-Seach-Configuration.png](https://i.postimg.cc/pTLRdbQC/Elastic-Seach-Configuration.png)](https://postimg.cc/94Kvxknw)
-
 # run docker kibana
 $  docker run --name kib-01 --net elastic -p 5601:5601 docker.elastic.co/kibana/kibana:7.8.1
-
-# After successfull execution
-[![Kibana-to-Test-Elastic-Search.png](https://i.postimg.cc/j2zbgxRs/Kibana-to-Test-Elastic-Search.png)](https://postimg.cc/N2fSLwyV)
 ```
 
 ## Test

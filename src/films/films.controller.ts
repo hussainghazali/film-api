@@ -6,10 +6,11 @@ import {
   Delete,
   Body,
   Param,
+  Query,
 } from '@nestjs/common';
 import { FilmService } from './films.service';
 import { CreateFilmDto, UpdateFilmDto } from './films.dto';
-import { ApiTags, ApiResponse, ApiParam, ApiBody } from '@nestjs/swagger';
+import { ApiTags, ApiResponse, ApiParam, ApiBody, ApiQuery } from '@nestjs/swagger';
 import { Film } from './films.entity';
 
 @ApiTags('films')
@@ -80,5 +81,18 @@ export class FilmController {
   })
   async getFilmRatings(@Param('id') id: number) {
     return this.filmService.getFilmRatings(id);
+  }
+
+  @Get('search')
+  @ApiQuery({
+    name: 'query',
+    type: String,
+    required: true,
+    description: 'Search query',
+  })
+  @ApiResponse({ status: 200, description: 'Successful search', type: [Film] })
+  async searchFilms(@Query('query') query: string): Promise<Film[]> {
+    const films = await this.filmService.searchFilms(query);
+    return films;
   }
 }

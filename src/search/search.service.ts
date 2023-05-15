@@ -11,11 +11,18 @@ export class SearchService {
     private readonly configService: ConfigService,
   ) {}
 
-  async indexFilm(film: Film) {
-    await this.esService.index({
-      index: this.configService.get('ELASTICSEARCH_INDEX'),
-      body: film,
-    });
+  async indexFilm(film: Film): Promise<boolean> {
+    try {
+      await this.esService.index({
+        index: this.configService.get('ELASTICSEARCH_INDEX'),
+        body: film,
+      });
+
+      return true; // Film was indexed successfully
+    } catch (error) {
+      console.error('Failed to index film:', error);
+      return false; // Film failed to index
+    }
   }
 
   async updateFilm(film: Film) {
@@ -27,6 +34,7 @@ export class SearchService {
   }
 
   async deleteFilm(filmId: number) {
+    console.log(filmId);
     await this.esService.delete({
       index: this.configService.get('ELASTICSEARCH_INDEX'),
       id: filmId.toString(),
@@ -40,7 +48,7 @@ export class SearchService {
         query: {
           multi_match: {
             query,
-            fields: ['name', 'description'], // Adjust the fields based on your film entity structure
+            fields: ['name'], // Adjust the fields based on your film entity structure
             fuzziness: 'AUTO', // Handle misspelled words
             operator: 'and', // Match all search terms
           },

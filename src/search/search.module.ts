@@ -17,6 +17,7 @@ import { ElasticsearchModule } from '@nestjs/elasticsearch';
         },
         maxRetries: configService.get('ELASTICSEARCH_MAX_RETRIES'),
         requestTimeout: configService.get('ELASTICSEARCH_REQ_TIMEOUT'),
+        ssl: { rejectUnauthorized: false },
       }),
       inject: [ConfigService],
     }),

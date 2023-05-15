@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { Film } from './films.entity';
 import { CreateFilmDto, UpdateFilmDto } from './films.dto';
 import { SearchService } from '../search/search.service';
@@ -24,7 +24,8 @@ export class FilmService {
   async createFilm(createFilmDto: CreateFilmDto) {
     const film = this.filmRepository.create(createFilmDto);
     const savedFilm = await this.filmRepository.save(film);
-    await this.elasticsearchService.indexFilm(savedFilm);
+    const data = await this.elasticsearchService.indexFilm(savedFilm);
+    console.log('check data', data);
     return savedFilm;
   }
 
@@ -38,15 +39,17 @@ export class FilmService {
     await this.elasticsearchService.updateFilm(savedFilm);
     return savedFilm;
   }
-  
 
   async deleteFilm(id: number) {
     const film = await this.filmRepository.findOne({ where: { id } });
     if (!film) {
       throw new NotFoundException('Film not found');
     }
-    await this.filmRepository.remove(film);
+    // Delete the document from Elasticsearch
     await this.elasticsearchService.deleteFilm(film.id);
+  
+    // Remove the record from the local database
+    await this.filmRepository.remove(film);
   }
 
   async getFilmRatings(filmId: number) {

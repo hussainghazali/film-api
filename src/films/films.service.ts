@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { EntityManager, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Film } from './films.entity';
 import { CreateFilmDto, UpdateFilmDto } from './films.dto';
 import { SearchService } from '../search/search.service';
@@ -13,14 +13,28 @@ export class FilmService {
     private readonly elasticsearchService: SearchService,
   ) {}
 
+  /**
+   * Get all films
+   * @returns A list of films
+   */
   async getAllFilms() {
     return this.filmRepository.find();
   }
 
+  /**
+   * Get a film by ID
+   * @param id The ID of the film
+   * @returns The film with the specified ID
+   */
   async getFilmById(id: number) {
     return this.filmRepository.findOne({ where: { id } });
   }
 
+  /**
+   * Create a new film
+   * @param createFilmDto The data for creating a film
+   * @returns The created film
+   */
   async createFilm(createFilmDto: CreateFilmDto) {
     const film = this.filmRepository.create(createFilmDto);
     const savedFilm = await this.filmRepository.save(film);
@@ -29,6 +43,13 @@ export class FilmService {
     return savedFilm;
   }
 
+  /**
+   * Update a film by ID
+   * @param id The ID of the film to update
+   * @param updateFilmDto The updated data for the film
+   * @returns The updated film
+   * @throws NotFoundException if the film is not found
+   */
   async updateFilm(id: number, updateFilmDto: UpdateFilmDto) {
     const film = await this.filmRepository.findOne({ where: { id } });
     if (!film) {
@@ -40,6 +61,11 @@ export class FilmService {
     return savedFilm;
   }
 
+  /**
+   * Delete a film by ID
+   * @param id The ID of the film to delete
+   * @throws NotFoundException if the film is not found
+   */
   async deleteFilm(id: number) {
     const film = await this.filmRepository.findOne({ where: { id } });
     if (!film) {
@@ -47,11 +73,16 @@ export class FilmService {
     }
     // Delete the document from Elasticsearch
     await this.elasticsearchService.deleteFilm(film.id);
-  
+
     // Remove the record from the local database
     await this.filmRepository.remove(film);
   }
 
+  /**
+   * Get the ratings of a film
+   * @param filmId The ID of the film
+   * @returns The ratings of the film
+   */
   async getFilmRatings(filmId: number) {
     const film = await this.filmRepository.find({
       where: { id: filmId },
@@ -60,6 +91,11 @@ export class FilmService {
     return film[0]?.ratings || [];
   }
 
+  /**
+   * Search films by query
+   * @param query The search query
+   * @returns A list of films matching the query
+   */
   async searchFilms(query: string): Promise<Film[]> {
     const searchResponse = await this.elasticsearchService.searchFilms(query);
     const hits = searchResponse.hits.hits;

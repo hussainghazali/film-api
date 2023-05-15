@@ -10,16 +10,19 @@ import { UserEntity } from '../user/user.entity';
 
 @Module({
   imports: [
+    // Register TypeORM entities for dependency injection and database integration
     TypeOrmModule.forFeature([RatingEntity, Film, UserEntity]),
+    // Configure PassportModule for JWT authentication
     PassportModule.register({
       defaultStrategy: 'jwt',
       property: 'user',
       session: false,
     }),
+    // Configure JwtModule for token generation and verification
     JwtModule.register({
-      secret: process.env.SECRETKEY,
+      secret: process.env.SECRETKEY, // Set the secret key from environment variables
       signOptions: {
-        expiresIn: process.env.EXPIRESIN,
+        expiresIn: process.env.EXPIRESIN, // Set the token expiration time from environment variables
       },
     }),
   ],

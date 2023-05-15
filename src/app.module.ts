@@ -15,14 +15,14 @@ import { SearchModule } from './search/search.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    TypeOrmModule.forRoot(dataSourceOptions),
-    AuthModule,
-    FilmsModule,
-    UsersModule,
-    RatingModule,
-    SearchModule,
+    TypeOrmModule.forRoot(dataSourceOptions), // Configure TypeORM with the provided data source options
+    AuthModule, // Import the AuthModule
+    FilmsModule, // Import the FilmsModule
+    UsersModule, // Import the UsersModule
+    RatingModule, // Import the RatingModule
+    SearchModule, // Import the SearchModule
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController], // Declare the AppController
+  providers: [AppService], // Declare the AppService
 })
 export class AppModule {}

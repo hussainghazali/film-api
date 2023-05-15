@@ -42,6 +42,8 @@ export class CreateFilmDto {
   @IsNotEmpty()
   @IsUrl()
   photo: string;
+  title: any;
+  director: any;
 }
 
 export class UpdateFilmDto {

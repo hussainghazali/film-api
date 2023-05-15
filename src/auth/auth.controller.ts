@@ -23,7 +23,6 @@ import { LoginUserDto } from '../user/user-login.dto';
 import { JwtPayload } from './payload.dto';
 import { AuthGuard } from '@nestjs/passport';
 
-
 @ApiTags('Authentication')
 @Controller('auth')
 export class AuthController {
@@ -40,6 +39,7 @@ export class AuthController {
     );
 
     if (!result.success) {
+      // Throw an exception with the appropriate message and status code if registration fails
       throw new HttpException(result.message, HttpStatus.BAD_REQUEST);
     }
 
@@ -59,10 +59,9 @@ export class AuthController {
     description: 'Returns the current authenticated user',
     type: JwtPayload,
   })
-
-  @UseGuards(AuthGuard())
+  @UseGuards(AuthGuard()) // Use the AuthGuard to protect this route
   @Get('me')
-  @ApiBearerAuth() 
+  @ApiBearerAuth() // Specify that this endpoint requires a bearer token
   @ApiOperation({ summary: 'Get authenticated user' })
   @ApiResponse({ status: 200, description: 'Returns the authenticated user' })
   public async testAuth(@Req() req: any): Promise<JwtPayload> {

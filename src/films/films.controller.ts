@@ -10,7 +10,13 @@ import {
 } from '@nestjs/common';
 import { FilmService } from './films.service';
 import { CreateFilmDto, UpdateFilmDto } from './films.dto';
-import { ApiTags, ApiResponse, ApiParam, ApiBody, ApiQuery } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiResponse,
+  ApiParam,
+  ApiBody,
+  ApiQuery,
+} from '@nestjs/swagger';
 import { Film } from './films.entity';
 
 @ApiTags('films')
@@ -18,6 +24,9 @@ import { Film } from './films.entity';
 export class FilmController {
   constructor(private readonly filmService: FilmService) {}
 
+  /**
+   * Retrieve all films
+   */
   @Get()
   @ApiResponse({
     status: 200,
@@ -29,6 +38,10 @@ export class FilmController {
     return this.filmService.getAllFilms();
   }
 
+  /**
+   * Retrieve a film by ID
+   * @param id The ID of the film
+   */
   @Get(':id')
   @ApiParam({ name: 'id', description: 'Film ID' })
   @ApiResponse({
@@ -40,6 +53,10 @@ export class FilmController {
     return this.filmService.getFilmById(id);
   }
 
+  /**
+   * Create a new film
+   * @param createFilmDto The data for creating the film
+   */
   @Post()
   @ApiBody({ type: CreateFilmDto })
   @ApiResponse({
@@ -51,6 +68,11 @@ export class FilmController {
     return this.filmService.createFilm(createFilmDto);
   }
 
+  /**
+   * Update a film by ID
+   * @param id The ID of the film
+   * @param updateFilmDto The data for updating the film
+   */
   @Put(':id')
   @ApiParam({ name: 'id', description: 'Film ID' })
   @ApiBody({ type: UpdateFilmDto })
@@ -63,6 +85,10 @@ export class FilmController {
     return this.filmService.updateFilm(id, updateFilmDto);
   }
 
+  /**
+   * Delete a film by ID
+   * @param id The ID of the film
+   */
   @Delete(':id')
   @ApiParam({ name: 'id', description: 'Film ID' })
   @ApiResponse({
@@ -73,16 +99,24 @@ export class FilmController {
     return this.filmService.deleteFilm(id);
   }
 
+  /**
+   * Retrieve ratings of a film by ID
+   * @param id The ID of the film
+   */
   @Get(':id/ratings')
   @ApiParam({ name: 'id', description: 'The ID of the film' })
   @ApiResponse({
     status: 200,
-    description: 'Retrieved film by ID successfully.',
+    description: 'Retrieved film ratings by ID successfully.',
   })
   async getFilmRatings(@Param('id') id: number) {
     return this.filmService.getFilmRatings(id);
   }
 
+  /**
+   * Search films by query
+   * @param query The search query
+   */
   @Get('search')
   @ApiQuery({
     name: 'query',

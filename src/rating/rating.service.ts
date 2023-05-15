@@ -18,6 +18,12 @@ export class RatingService {
     private readonly userRepository: Repository<UserEntity>,
   ) {}
 
+  /**
+   * Creates a new rating for a film.
+   * @param createRatingDto The DTO containing the rating details.
+   * @param request The authenticated request containing user information.
+   * @returns The created rating.
+   */
   async createRating(
     createRatingDto: CreateRatingDto,
     request: AuthenticatedRequest,

@@ -43,6 +43,66 @@ $ npm run start:dev
 
 # production mode
 $ npm run start:prod
+
+# After successfull execution
+[![Project-Running-Successfully.png](https://i.postimg.cc/Zqh62jP4/Project-Running-Successfully.png)](https://postimg.cc/212qBQXK)
+```
+
+## Migration
+
+```bash
+# Build the migration
+$ npm run build
+
+# create a new migration
+$  typeorm -- migration:create database/migrations/CreateRatingTable
+
+# run migration
+$  typeorm -d dist/database/data-source.js migration:run
+
+# revert migration
+$  typeorm -d dist/database/data-source.js migration:revert
+
+# After successfull execution
+[![Migrations.png](https://i.postimg.cc/hjBM8cZ8/Migrations.png)](https://postimg.cc/3ytgY5TW)
+```
+
+## Swagger API Reference
+
+```bash
+# Build the migration
+$ http://localhost:3000/api#/
+
+# After successfull execution
+[![Swagger-API-Documentation.png](https://i.postimg.cc/KjLM0MKR/Swagger-API-Documentation.png)](https://postimg.cc/WqNz3twv)
+
+# After successfull execution
+[![Swagger-Schema-and-DTO-Documentation.png](https://i.postimg.cc/PxvpqwQ2/Swagger-Schema-and-DTO-Documentation.png)](https://postimg.cc/Vr1LG5TC)
+```
+
+## Docker - Elasticsearch and Kibana
+
+```bash
+# Docker Running After successfull execution
+[![Docker-Instance-Elastic-Search-and-Kibana.png](https://i.postimg.cc/G3DSsgMx/Docker-Instance-Elastic-Search-and-Kibana.png)](https://postimg.cc/LhHVcDFJ)
+
+# Pull Elasticsearch
+$  docker pull docker.elastic.co/elasticsearch/elasticsearch:7.8.1 
+
+# Pull Kibana
+$  docker pull docker.elastic.co/kibana/kibana:7.8.1  
+
+# run docker Elasticsearch
+$  docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.8.1
+
+# After successfull execution
+[![Elastic-Seach-Configuration.png](https://i.postimg.cc/pTLRdbQC/Elastic-Seach-Configuration.png)](https://postimg.cc/94Kvxknw)
+
+# run docker kibana
+$  docker run --name kib-01 --net elastic -p 5601:5601 docker.elastic.co/kibana/kibana:7.8.1
+
+# After successfull execution
+[![Kibana-to-Test-Elastic-Search.png](https://i.postimg.cc/j2zbgxRs/Kibana-to-Test-Elastic-Search.png)](https://postimg.cc/N2fSLwyV)
 ```
 
 ## Test

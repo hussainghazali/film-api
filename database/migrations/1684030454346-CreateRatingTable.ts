@@ -7,6 +7,7 @@ import {
 
 export class CreateRatingTable1684030454346 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
+    // Create ratings table
     await queryRunner.createTable(
       new Table({
         name: 'ratings',
@@ -39,6 +40,7 @@ export class CreateRatingTable1684030454346 implements MigrationInterface {
       true,
     );
 
+    // Create foreign key for user_id referencing users table
     await queryRunner.createForeignKey(
       'ratings',
       new TableForeignKey({
@@ -49,6 +51,7 @@ export class CreateRatingTable1684030454346 implements MigrationInterface {
       }),
     );
 
+    // Create foreign key for film_id referencing film table
     await queryRunner.createForeignKey(
       'ratings',
       new TableForeignKey({
@@ -61,16 +64,24 @@ export class CreateRatingTable1684030454346 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
+    // Retrieve ratings table
     const table = await queryRunner.getTable('ratings');
+
+    // Find foreign key for user_id
     const foreignKeyUser = table.foreignKeys.find(
       (fk) => fk.columnNames.indexOf('user_id') !== -1,
     );
+
+    // Find foreign key for film_id
     const foreignKeyFilm = table.foreignKeys.find(
       (fk) => fk.columnNames.indexOf('film_id') !== -1,
     );
 
+    // Drop foreign keys
     await queryRunner.dropForeignKey('ratings', foreignKeyUser);
     await queryRunner.dropForeignKey('ratings', foreignKeyFilm);
+
+    // Drop ratings table
     await queryRunner.dropTable('ratings');
   }
 }

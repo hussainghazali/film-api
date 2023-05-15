@@ -11,15 +11,20 @@ import { AuthenticatedRequest } from 'src/auth/authenticated-request';
 export class RatingController {
   constructor(private readonly ratingService: RatingService) {}
 
+  // Apply AuthGuard to protect the route
   @UseGuards(AuthGuard())
+  // Specify the use of Bearer token authentication in Swagger
   @ApiBearerAuth()
+  // Define the expected request body in Swagger
   @ApiBody({ type: CreateRatingDto })
+  // Apply JwtAuthGuard to protect the route
   @UseGuards(JwtAuthGuard)
   @Post()
   async createRating(
     @Body() createRatingDto: CreateRatingDto,
     @Req() request: AuthenticatedRequest,
   ) {
+    // Call the rating service to create a new rating
     return this.ratingService.createRating(createRatingDto, request);
   }
 }

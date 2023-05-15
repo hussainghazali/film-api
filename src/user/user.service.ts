@@ -15,21 +15,24 @@ export class UsersService {
     private readonly userRepo: Repository<UserEntity>,
   ) {}
 
+  // Convert UserEntity to UserDto
   private toUserDto(user: UserEntity): UserDto {
     return plainToClass(UserDto, user);
   }
 
+  // Find a user by specified options
   async findOne(options?: Partial<UserEntity>): Promise<UserDto> {
     const { hashPassword, ...searchOptions } = options || {};
-  
+
     const findOptions: FindOneOptions<UserEntity> = {
       where: searchOptions,
     };
-  
+
     const user = await this.userRepo.findOne(findOptions);
     return this.toUserDto(user);
   }
 
+  // Find a user by login credentials
   async findByLogin({ username, password }: LoginUserDto): Promise<UserDto> {
     const user = await this.userRepo.findOne({ where: { username } });
 
@@ -37,7 +40,7 @@ export class UsersService {
       throw new HttpException('User not found', HttpStatus.UNAUTHORIZED);
     }
 
-    // compare passwords
+    // Compare passwords
     const areEqual = compareSync(password, user.password);
 
     if (!areEqual) {
@@ -47,15 +50,17 @@ export class UsersService {
     return this.toUserDto(user);
   }
 
+  // Find a user by payload (e.g., JWT payload)
   async findByPayload({ username }: { username: string }): Promise<UserDto> {
     const user = await this.userRepo.findOne({ where: { username } });
     return this.toUserDto(user);
   }
 
+  // Create a new user
   async create(userDto: CreateUserDto): Promise<UserEntity> {
     const { username, password, email } = userDto;
 
-    // check if the user exists in the db
+    // Check if the user exists in the database
     const userInDb = await this.userRepo.findOne({ where: { username } });
     if (userInDb) {
       throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
@@ -72,6 +77,7 @@ export class UsersService {
     return user;
   }
 
+  // Sanitize user by removing the password field
   private sanitizeUser(user: UserEntity): UserEntity {
     const { password, ...sanitizedUser } = user;
     return sanitizedUser as UserEntity;

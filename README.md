@@ -64,7 +64,7 @@ $  typeorm -d dist/database/data-source.js migration:run
 $  typeorm -d dist/database/data-source.js migration:revert
 
 # After successfull execution
-[![Migrations.png](https://i.postimg.cc/hjBM8cZ8/Migrations.png)](https://postimg.cc/3ytgY5TW)
+![Migrations](https://github.com/hussainghazali/film-api/assets/50146615/3b323013-3974-4703-9bb9-da2e75f5ec63)
 ```
 
 ## Swagger API Reference

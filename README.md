@@ -46,6 +46,10 @@ $ npm run start:prod
 
 # After successfull execution
 <img src="https://github.com/hussainghazali/film-api/blob/master/images/Project%20Running%20Successfully.png" alt="Example Image">
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="[https://nestjs.com/img/logo-small.svg](https://github.com/hussainghazali/film-api/blob/master/images/Project%20Running%20Successfully.png)"/></a>
+</p>
+![Project Running Successfully](https://github.com/hussainghazali/film-api/blob/master/images/Project%20Running%20Successfully.png)
 ```
 
 ## Migration

@@ -64,8 +64,13 @@ describe('UsersService', () => {
 
       const result = await service.findByLogin(loginUserDto);
 
-      expect(repository.findOne).toHaveBeenCalledWith({ where: { username: loginUserDto.username } });
-      expect(compareSync).toHaveBeenCalledWith(loginUserDto.password, userEntity.password);
+      expect(repository.findOne).toHaveBeenCalledWith({
+        where: { username: loginUserDto.username },
+      });
+      expect(compareSync).toHaveBeenCalledWith(
+        loginUserDto.password,
+        userEntity.password,
+      );
       expect(service.toUserDto).toHaveBeenCalledWith(userEntity);
       expect(result).toBe(userDto);
     });
@@ -79,7 +84,7 @@ describe('UsersService', () => {
       jest.spyOn(repository, 'findOne').mockResolvedValue(null);
 
       await expect(service.findByLogin(loginUserDto)).rejects.toThrowError(
-        new HttpException('User not found', HttpStatus.UNAUTHORIZED)
+        new HttpException('User not found', HttpStatus.UNAUTHORIZED),
       );
     });
 
@@ -94,7 +99,7 @@ describe('UsersService', () => {
       jest.spyOn(compareSync, 'compareSync').mockReturnValue(false);
 
       await expect(service.findByLogin(loginUserDto)).rejects.toThrowError(
-        new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED)
+        new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED),
       );
     });
   });
@@ -110,7 +115,9 @@ describe('UsersService', () => {
 
       const result = await service.findByPayload(payload);
 
-      expect(repository.findOne).toHaveBeenCalledWith({ where: { username: payload.username } });
+      expect(repository.findOne).toHaveBeenCalledWith({
+        where: { username: payload.username },
+      });
       expect(service.toUserDto).toHaveBeenCalledWith(userEntity);
       expect(result).toBe(userDto);
     });
@@ -131,7 +138,9 @@ describe('UsersService', () => {
 
       const result = await service.create(createUserDto);
 
-      expect(repository.findOne).toHaveBeenCalledWith({ where: { username: createUserDto.username } });
+      expect(repository.findOne).toHaveBeenCalledWith({
+        where: { username: createUserDto.username },
+      });
       expect(repository.create).toHaveBeenCalledWith(createUserDto);
       expect(repository.save).toHaveBeenCalledWith(userEntity);
       expect(result).toBe(userEntity);
@@ -148,7 +157,7 @@ describe('UsersService', () => {
       jest.spyOn(repository, 'findOne').mockResolvedValue(userEntity);
 
       await expect(service.create(createUserDto)).rejects.toThrowError(
-        new HttpException('User already exists', HttpStatus.BAD_REQUEST)
+        new HttpException('User already exists', HttpStatus.BAD_REQUEST),
       );
     });
   });
@@ -166,4 +175,3 @@ describe('UsersService', () => {
     });
   });
 });
-

@@ -45,6 +45,7 @@ $ npm run start:dev
 $ npm run start:prod
 
 # After successfull execution
+![Example Image](https://github.com/your-username/your-repository/raw/main/images/example.png)
 [![Project-Running-Successfully.png](https://i.postimg.cc/Zqh62jP4/Project-Running-Successfully.png)](https://postimg.cc/212qBQXK)
 ```
 

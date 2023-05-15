@@ -16,7 +16,7 @@ export class UsersService {
   ) {}
 
   // Convert UserEntity to UserDto
-  private toUserDto(user: UserEntity): UserDto {
+  public toUserDto(user: UserEntity): UserDto {
     return plainToClass(UserDto, user);
   }
 
@@ -78,7 +78,7 @@ export class UsersService {
   }
 
   // Sanitize user by removing the password field
-  private sanitizeUser(user: UserEntity): UserEntity {
+  public sanitizeUser(user: UserEntity): UserEntity {
     const { password, ...sanitizedUser } = user;
     return sanitizedUser as UserEntity;
   }

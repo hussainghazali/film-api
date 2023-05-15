@@ -45,7 +45,7 @@ $ npm run start:dev
 $ npm run start:prod
 
 # After successfull execution
-![Project Running Successfully](https://github.com/hussainghazali/film-api/blob/master/images/Project%20Running%20Successfully.png)
+<img src="https://github.com/hussainghazali/film-api/blob/master/images/Project%20Running%20Successfully.png" alt="Example Image">
 ```
 
 ## Migration

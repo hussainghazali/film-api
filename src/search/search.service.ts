@@ -3,6 +3,7 @@ import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { Film } from '../films/films.entity';
 import { SearchResponse } from '@elastic/elasticsearch/lib/api/types';
 import { ConfigService } from '@nestjs/config';
+import axios from 'axios';
 
 @Injectable()
 export class SearchService {
@@ -13,10 +14,17 @@ export class SearchService {
 
   async indexFilm(film: Film): Promise<boolean> {
     try {
-      await this.esService.index({
-        index: this.configService.get('ELASTICSEARCH_INDEX'),
-        body: film,
-      });
+      const headers = {
+        'Content-Type': 'application/json', // Set the Content-Type header
+      };
+
+      await axios.post(
+        `http://localhost:9200/${this.configService.get(
+          'ELASTICSEARCH_INDEX',
+        )}/_doc`,
+        film,
+        { headers },
+      );
 
       return true; // Film was indexed successfully
     } catch (error) {
